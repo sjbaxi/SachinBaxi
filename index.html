@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sachin Baxi — Revenue & Growth Leader</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0f2137;
+    --navy-mid: #1b3a5c;
+    --blue: #2e6fa3;
+    --blue-light: #4a90c4;
+    --gold: #b8923a;
+    --gold-light: #d4ae6a;
+    --cream: #f8f5f0;
+    --warm-white: #fdfcfa;
+    --text: #1a1a2e;
+    --text-mid: #3d3d52;
+    --text-light: #6b6b84;
+    --rule: rgba(184, 146, 58, 0.3);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--warm-white);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── SIDEBAR NAV ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 72px;
+    height: 100vh;
+    background: var(--navy);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    z-index: 100;
+  }
+
+  .sidebar-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .sidebar-dot:hover, .sidebar-dot.active {
+    background: var(--gold-light);
+    transform: scale(1.5);
+  }
+
+  .sidebar-dot::after {
+    content: attr(data-label);
+    position: absolute;
+    left: 20px;
+    white-space: nowrap;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--gold-light);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+    background: var(--navy);
+    padding: 4px 10px;
+    border-radius: 3px;
+  }
+
+  .sidebar-dot:hover::after { opacity: 1; }
+
+  /* ── MAIN LAYOUT ── */
+  main {
+    margin-left: 72px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: var(--navy);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(46,111,163,0.2) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: 30%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(184,146,58,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6rem 4rem 6rem 5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(4rem, 6vw, 7rem);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--warm-white);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-name em {
+    display: block;
+    font-style: italic;
+    color: var(--gold-light);
+    font-weight: 300;
+  }
+
+  .hero-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.05em;
+    line-height: 1.6;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+    max-width: 380px;
+  }
+
+  .hero-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+
+  .hero-contact a {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .hero-contact a:hover { color: var(--gold-light); }
+
+  .contact-icon {
+    width: 16px;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6rem 5rem 6rem 3rem;
+    border-left: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+    z-index: 1;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    margin-bottom: 4rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  .stat {
+    border-left: 2px solid var(--gold);
+    padding-left: 1.2rem;
+  }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight: 300;
+    color: var(--warm-white);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+
+  .hero-summary {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.8;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.9s forwards;
+  }
+
+  /* ── SECTION COMMON ── */
+  section {
+    padding: 6rem 5rem;
+  }
+
+  section:nth-child(even) {
+    background: var(--cream);
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 300;
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 3.5rem;
+    position: relative;
+  }
+
+  .section-title::after {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 2px;
+    background: var(--gold);
+    margin-top: 1rem;
+  }
+
+  /* ── HIGHLIGHTS ── */
+  #highlights {
+    background: var(--navy);
+  }
+
+  #highlights .section-label { color: var(--gold); }
+  #highlights .section-title { color: var(--warm-white); }
+
+  .highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    background: rgba(255,255,255,0.06);
+  }
+
+  .highlight-card {
+    background: var(--navy);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s ease;
+  }
+
+  .highlight-card:hover {
+    background: rgba(46,111,163,0.15);
+  }
+
+  .highlight-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--gold);
+    transition: width 0.4s ease;
+  }
+
+  .highlight-card:hover::before { width: 100%; }
+
+  .highlight-metric {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    font-weight: 300;
+    color: var(--gold-light);
+    line-height: 1;
+    margin-bottom: 0.8rem;
+  }
+
+  .highlight-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* ── EXPERIENCE ── */
+  .experience-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .exp-item {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 3rem;
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--rule);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .exp-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .exp-item:last-child { border-bottom: none; }
+
+  .exp-meta {
+    padding-top: 0.2rem;
+  }
+
+  .exp-company {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 0.3rem;
+  }
+
+  .exp-dates {
+    font-size: 11px;
+    color: var(--text-light);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .exp-content {}
+
+  .exp-role {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--navy-mid);
+    margin-bottom: 0.4rem;
+    line-height: 1.2;
+  }
+
+  .exp-note {
+    font-size: 12px;
+    font-style: italic;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+  }
+
+  .exp-context {
+    font-size: 13.5px;
+    color: var(--text-mid);
+    margin-bottom: 1.2rem;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .exp-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .exp-bullets li {
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.6;
+    padding-left: 1.2rem;
+    position: relative;
+    font-weight: 300;
+  }
+
+  .exp-bullets li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 10px;
+    top: 3px;
+  }
+
+  /* Sub-roles within BCCL */
+  .sub-role {
+    margin-top: 1.8rem;
+    padding-top: 1.8rem;
+    border-top: 1px dashed rgba(184,146,58,0.2);
+  }
+
+  .sub-role-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--navy-mid);
+    margin-bottom: 0.25rem;
+  }
+
+  .sub-role-dates {
+    font-size: 11px;
+    color: var(--text-light);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  /* ── COMPETENCIES ── */
+  #competencies { background: var(--cream); }
+
+  .competency-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .competency-item {
+    background: white;
+    border: 1px solid rgba(184,146,58,0.15);
+    padding: 1.2rem 1.5rem;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--navy-mid);
+    letter-spacing: 0.02em;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .competency-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--gold);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+  }
+
+  .competency-item:hover {
+    border-color: var(--gold);
+    background: rgba(184,146,58,0.03);
+  }
+
+  .competency-item:hover::before {
+    transform: scaleY(1);
+  }
+
+  /* ── EDUCATION & AWARDS ── */
+  .edu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .edu-block {}
+
+  .edu-degree {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--navy);
+    margin-bottom: 0.2rem;
+    line-height: 1.3;
+  }
+
+  .edu-institution {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-bottom: 0.2rem;
+  }
+
+  .edu-detail {
+    font-size: 12px;
+    color: var(--gold);
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .edu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .cert-group-title {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+    font-weight: 400;
+  }
+
+  .cert-item {
+    font-size: 13px;
+    color: var(--text-mid);
+    padding-left: 1rem;
+    border-left: 2px solid var(--rule);
+    line-height: 1.5;
+  }
+
+  .award-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .award-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .award-star {
+    color: var(--gold);
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .award-text {
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.5;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy);
+    padding: 3rem 5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .footer-contact {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .footer-contact a {
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+
+  .footer-contact a:hover { color: var(--gold-light); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SCROLL PROGRESS ── */
+  .scroll-progress {
+    position: fixed;
+    top: 0; left: 72px; right: 0;
+    height: 2px;
+    background: var(--gold);
+    transform-origin: left;
+    transform: scaleX(0);
+    z-index: 99;
+    transition: transform 0.1s linear;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    main { margin-left: 0; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    section { padding: 4rem 2rem; }
+    .exp-item { grid-template-columns: 1fr; gap: 1rem; }
+    .highlights-grid, .competency-grid { grid-template-columns: 1fr 1fr; }
+    .edu-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- SIDEBAR NAV -->
+<nav class="sidebar">
+  <div class="sidebar-dot active" data-label="Profile" data-target="hero" onclick="scrollTo('hero')"></div>
+  <div class="sidebar-dot" data-label="Highlights" data-target="highlights" onclick="scrollTo('highlights')"></div>
+  <div class="sidebar-dot" data-label="Experience" data-target="experience" onclick="scrollTo('experience')"></div>
+  <div class="sidebar-dot" data-label="Competencies" data-target="competencies" onclick="scrollTo('competencies')"></div>
+  <div class="sidebar-dot" data-label="Education" data-target="education" onclick="scrollTo('education')"></div>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Executive Profile</p>
+      <h1 class="hero-name">Sachin<em>Baxi</em></h1>
+      <p class="hero-title">Revenue & Growth Leader &nbsp;·&nbsp; Industry Platforms &nbsp;·&nbsp; Strategic Partnerships &nbsp;·&nbsp; Ecosystem Development</p>
+      <div class="hero-contact">
+        <a href="tel:+919821313425">
+          <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.03 2.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.93v1.99z"/></svg>
+          +91 98213 13425
+        </a>
+        <a href="/cdn-cgi/l/email-protection#0f7c656d6e77664f68626e6663216c6062">
+          <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <span class="__cf_email__" data-cfemail="f0839a92918899b0979d91999cde939f9d">[email&#160;protected]</span>
+        </a>
+        <a href="https://linkedin.com/in/sachinbaxi" target="_blank">
+          <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          linkedin.com/in/sachinbaxi
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="stats-grid">
+        <div class="stat">
+          <div class="stat-number">25+</div>
+          <div class="stat-label">Years of leadership</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">₹550Cr</div>
+          <div class="stat-label">Business verticals scaled</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">₹250Cr</div>
+          <div class="stat-label">Deal pipeline built</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">₹400Cr</div>
+          <div class="stat-label">Ecommerce vertical in year one</div>
+        </div>
+      </div>
+      <p class="hero-summary">
+        "Senior growth leader combining market insight, commercial strategy, and ecosystem partnerships to build scalable, outcome-driven revenue platforms across India's most complex multi-sector environments."
+      </p>
+    </div>
+  </section>
+
+  <!-- KEY HIGHLIGHTS -->
+  <section id="highlights">
+    <div class="section-label">By the numbers</div>
+    <div class="section-title">Career Highlights</div>
+    <div class="highlights-grid">
+      <div class="highlight-card">
+        <div class="highlight-metric">₹400Cr</div>
+        <div class="highlight-desc">Ecommerce vertical scaled within a single year through aggressive market entry and data-led multimedia solutions</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-metric">₹250Cr+</div>
+        <div class="highlight-desc">Strategic deal pipeline built and converted through long-term ecosystem partnerships with founders and leadership teams</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-metric">20% YoY</div>
+        <div class="highlight-desc">Revenue growth delivered for Maharashtra Times, restoring full profitability post-pandemic with a team of 16</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-metric">₹160Cr+</div>
+        <div class="highlight-desc">Revenue across F&B (64% growth) and Interior Décor (30% CAGR), elevating Interiors into the ₹100Cr revenue club</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-metric">₹1Cr+</div>
+        <div class="highlight-desc">New sponsorship revenue from a single IP category — among the highest in language publications nationally</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-metric">200+</div>
+        <div class="highlight-desc">Industry articles authored; research reports generating ₹3Cr+ revenue; conceptualised ET Logistics and ET Décor indices</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-label">Career history</div>
+    <div class="section-title">Professional Experience</div>
+
+    <div class="experience-list">
+
+      <!-- Jetmetaphy -->
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-company">Jetmetaphy Labs<br><span style="font-size:11px;color:var(--text-light);font-family:'DM Sans'">Jetsynthesys Group</span></div>
+          <div class="exp-dates">Jul 2025 – Feb 2026</div>
+        </div>
+        <div class="exp-content">
+          <div class="exp-role">Strategic Growth & Market Development Lead</div>
+          <div class="exp-note">Role concluded following a strategic pivot in investor priorities.</div>
+          <div class="exp-context">Led market entry strategy for AI-driven immersive solutions across retail, real estate, jewellery, and apparel sectors, establishing commercial and partner foundations for a new revenue vertical.</div>
+          <ul class="exp-bullets">
+            <li>Developed go-to-market frameworks for immersive brand experiences across four sectors, creating commercial positioning and pricing architecture for AI-led offerings</li>
+            <li>Secured early-stage client partnerships and shaped the investor-aligned growth roadmap in collaboration with senior leadership</li>
+            <li>Assessed sector readiness and built a qualified prospect pipeline as the foundation for scaled revenue entry</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- BCCL -->
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-company">Bennett Coleman & Co. Ltd.<br><span style="font-size:11px;color:var(--text-light);font-family:'DM Sans'">Times of India Group</span></div>
+          <div class="exp-dates">Mar 2007 – Jul 2025</div>
+        </div>
+        <div class="exp-content">
+          <div class="exp-context">Held successive national leadership roles across 18 years, driving portfolio strategy, revenue growth, and ecosystem partnerships across India's largest media platform.</div>
+
+          <!-- Sub-role 1 -->
+          <div class="sub-role">
+            <div class="sub-role-title">Revenue Strategy & Strategic Alliances</div>
+            <div class="sub-role-dates">Aug 2024 – Jul 2025</div>
+            <ul class="exp-bullets">
+              <li>Developed monetisation frameworks for the Mumbai Mirror relaunch and emerging esports initiatives, establishing advertiser propositions for new content formats</li>
+              <li>Rebuilt and strengthened the partner ecosystem across digital and live media, increasing partner engagement across emerging media categories</li>
+            </ul>
+          </div>
+
+          <!-- Sub-role 2 -->
+          <div class="sub-role">
+            <div class="sub-role-title">Revenue Head — Languages Business</div>
+            <div class="sub-role-dates">Sep 2022 – Aug 2024</div>
+            <ul class="exp-bullets">
+              <li>Delivered 20% YoY revenue growth for Maharashtra Times and grew Navbharat Times revenues, restoring full profitability post-pandemic across both publications; team of 16</li>
+              <li>Generated ₹1Cr+ in sponsorship revenue from two major IP platforms — among the highest in language publications nationally</li>
+            </ul>
+          </div>
+
+          <!-- Sub-role 3 -->
+          <div class="sub-role">
+            <div class="sub-role-title">Activations & IP Revenue Leadership</div>
+            <div class="sub-role-dates">Apr 2021 – Sep 2022</div>
+            <ul class="exp-bullets">
+              <li>Monetised marquee platforms including ET Start-Up Awards, Let's Beat Diabetes, and HSBC eCyclothon, delivering significant multi-brand sponsorship revenues</li>
+              <li>Created new IP categories across ESG, travel, robotics, health, and wealth management, expanding the monetisable platform portfolio</li>
+              <li>Led strategy and multimedia execution for Times of India's largest crypto IP in 2022</li>
+            </ul>
+          </div>
+
+          <!-- Sub-role 4 -->
+          <div class="sub-role">
+            <div class="sub-role-title">National Vertical Head — Revenue Strategy</div>
+            <div class="sub-role-dates">May 2015 – Apr 2021</div>
+            <ul class="exp-bullets">
+              <li>Scaled ecommerce vertical to ₹400Cr within a year through aggressive market entry, integrated multimedia solutions, and data-led print-to-digital validation; built dominant market share nationally</li>
+              <li>Drove ₹160Cr+ integrated revenue across F&B (64% growth) and Interior Décor (30% CAGR) over three years, elevating Interiors into the ₹100Cr revenue club</li>
+              <li>Led revenue strategy for Mirror tabloids including the launch of Mumbai Mirror Gujarati, generating ₹1Cr+ in year one</li>
+            </ul>
+          </div>
+
+          <!-- Sub-role 5 -->
+          <div class="sub-role">
+            <div class="sub-role-title">Business Development — Brand Capital</div>
+            <div class="sub-role-dates">Mar 2007 – May 2015</div>
+            <ul class="exp-bullets">
+              <li>Built and converted ₹250Cr+ deal pipeline through long-term commercial frameworks with high-growth founders across consumer, technology, and services sectors</li>
+              <li>Structured multi-year partnerships with aligned commercial and exit frameworks, supporting aggressive growth strategies for partner companies</li>
+              <li>Managed end-to-end deal lifecycle from origination through commercial execution and relationship management</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ET -->
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-company">The Economic Times<br><span style="font-size:11px;color:var(--text-light);font-family:'DM Sans'">BCCL</span></div>
+          <div class="exp-dates">Dec 2000 – Mar 2007</div>
+        </div>
+        <div class="exp-content">
+          <div class="exp-role">Industry Research & Content Strategy</div>
+          <div class="exp-context">Built a strong foundation in industry analysis, content creation, and stakeholder engagement across manufacturing, FMCG, supply chain, and automotive sectors.</div>
+          <ul class="exp-bullets">
+            <li>Authored 200+ in-depth industry articles; produced research reports generating ₹3Cr+ in direct revenue</li>
+            <li>Conceptualised the ET Logistics and ET Décor industry indices — both became recurring revenue and editorial platforms</li>
+            <li>Executed 20+ industry conferences involving senior government officials and corporate leaders across India</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Piramal -->
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-company">Piramal Glass Ltd.</div>
+          <div class="exp-dates">Mar 1998 – Dec 2000</div>
+        </div>
+        <div class="exp-content">
+          <div class="exp-role">Assistant Manager — Exports</div>
+          <ul class="exp-bullets">
+            <li>Developed and managed export markets across Europe and Asia, building foundational commercial and client relationship skills in an international context</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- COMPETENCIES -->
+  <section id="competencies">
+    <div class="section-label">Skills & expertise</div>
+    <div class="section-title">Core Competencies</div>
+    <div class="competency-grid">
+      <div class="competency-item">Portfolio Strategy & Expansion</div>
+      <div class="competency-item">Revenue Growth & Commercial Strategy</div>
+      <div class="competency-item">P&L Leadership</div>
+      <div class="competency-item">Industry Platforms & IP Monetisation</div>
+      <div class="competency-item">Strategic Partnerships & Alliances</div>
+      <div class="competency-item">Category Creation & New Market Entry</div>
+      <div class="competency-item">Stakeholder Engagement</div>
+      <div class="competency-item">Team Leadership & Mentoring</div>
+      <div class="competency-item">Emerging Technology GTM</div>
+    </div>
+  </section>
+
+  <!-- EDUCATION & AWARDS -->
+  <section id="education">
+    <div class="section-label">Qualifications & recognition</div>
+    <div class="section-title">Education & Awards</div>
+
+    <div class="edu-grid">
+      <div>
+        <p class="cert-group-title" style="margin-bottom:1.5rem">Academic Qualifications</p>
+        <div class="edu-list">
+          <div class="edu-block">
+            <div class="edu-degree">MBA — Marketing</div>
+            <div class="edu-institution">Institute of Management Development & Research, Pune</div>
+            <div class="edu-detail">Distinction & Best Outgoing Student</div>
+          </div>
+          <div class="edu-block">
+            <div class="edu-degree">B.E. Electrical Engineering</div>
+            <div class="edu-institution">Birla Vishwakarma Mahavidyalaya, Gujarat</div>
+          </div>
+        </div>
+
+        <div style="margin-top:2.5rem">
+          <p class="cert-group-title">Executive Education</p>
+          <div style="display:flex;flex-direction:column;gap:0.6rem">
+            <div class="cert-item">Driving Profitable Growth — <strong>Wharton Business School</strong></div>
+            <div class="cert-item">Leading Effective Change — <strong>Indian School of Business</strong></div>
+          </div>
+        </div>
+
+        <div style="margin-top:2rem">
+          <p class="cert-group-title">Certifications</p>
+          <div style="display:flex;flex-direction:column;gap:0.6rem">
+            <div class="cert-item">Google AI Essentials & Prompting Essentials</div>
+            <div class="cert-item">Google Cybersecurity Professional Certificate</div>
+            <div class="cert-item">Diploma in Cyber Law — Asian School of Cyber Law</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <p class="cert-group-title" style="margin-bottom:1.5rem">Awards & Recognition</p>
+        <div class="award-list">
+          <div class="award-item">
+            <span class="award-star">★</span>
+            <span class="award-text"><strong>Vertical Virtuoso Award</strong> for Revenue Leadership — Bennett Coleman & Co. Ltd.</span>
+          </div>
+          <div class="award-item">
+            <span class="award-star">★</span>
+            <span class="award-text"><strong>Fresh Thinking Award</strong> for Created Business — Bennett Coleman & Co. Ltd.</span>
+          </div>
+          <div class="award-item">
+            <span class="award-star">★</span>
+            <span class="award-text"><strong>Fastest Rising Contributor</strong> — Bennett Coleman & Co. Ltd.</span>
+          </div>
+          <div class="award-item">
+            <span class="award-star">★</span>
+            <span class="award-text"><strong>Multiple President's Mentions</strong> for consistently exceeding growth targets</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-name">Sachin Baxi</div>
+    <div class="footer-contact">
+      <a href="tel:+919821313425">+91 98213 13425</a>
+      <a href="/cdn-cgi/l/email-protection#e7948d85869f8ea7808a868e8bc984888a"><span class="__cf_email__" data-cfemail="c4b7aea6a5bcad84a3a9a5ada8eaa7aba9">[email&#160;protected]</span></a>
+      <a href="https://linkedin.com/in/sachinbaxi" target="_blank">LinkedIn</a>
+    </div>
+  </footer>
+
+</main>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Scroll progress bar
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+    document.getElementById('scrollProgress').style.transform = `scaleX(${scrolled})`;
+  });
+
+  // Sidebar active state
+  const sections = document.querySelectorAll('section[id], .hero');
+  const dots = document.querySelectorAll('.sidebar-dot');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        dots.forEach(d => d.classList.remove('active'));
+        const active = document.querySelector(`.sidebar-dot[data-target="${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Smooth scroll
+  function scrollTo(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Scroll-triggered fade-in for experience items
+  const expItems = doc
